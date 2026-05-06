@@ -7,6 +7,7 @@ export default class NoteController {
         const data = req.body;
         if (req.file) data.imageUrl = '/uploads/' + req.file.filename;
         data.userId = req.user.id; 
+     /*    data.userId =3; */
         try {
             const note = await this.noteService.createNote(data);
             res.status(201).json(note); // 201 Created
