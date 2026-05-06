@@ -14,7 +14,7 @@ const router = Router();
 
 // Solo los administradores pueden registrar nuevos usuarios
 /* router.post("/register", authController.register); */
-router.post("/register", authMiddleware,roleMiddleware(["admin"]), authController.register);
+router.post("/register", authController.register);
 router.post("/login", authController.login);
 
 export default router;
