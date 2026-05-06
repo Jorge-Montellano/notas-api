@@ -11,7 +11,7 @@ import { connectMongo } from './infrastructure/database/mongo/connection.js';
 import { connectMysql } from './infrastructure/database/mysql/connection.js'; 
 
 await connectMongo();
-/* await connectMysql();  */
+await connectMysql(); 
  
 const app = express();
  
