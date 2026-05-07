@@ -8,7 +8,8 @@ import noteRoutes from './presentation/routes/note.routes.js';
 import authRoutes from './presentation/routes/auth.routes.js';
 /* import categoryRoutes from './presentation/routes/category.routes.js'; */
 import { connectMongo } from './infrastructure/database/mongo/connection.js';
-import { connectMysql } from './infrastructure/database/mysql/connection.js'; 
+import { connectMysql } from './infrastructure/database/mysql/connection.js';
+import { setupSwagger } from './infrastructure/config/swagger.config.js';
 
 await connectMongo();
 await connectMysql(); 
@@ -17,6 +18,7 @@ const app = express();
  
 app.use(cors());
 app.use(express.json());
+setupSwagger(app);
 app.use(loggerMiddleware);
 app.use(morgan('dev'));
  

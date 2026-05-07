@@ -1,66 +1,120 @@
+import { successResponse, errorResponse} from "../../shared/helpers/response.helper.js";
+
 export default class NoteController {
     constructor(noteService) {
         this.noteService = noteService;
     }
 
     createNote = async (req, res) => {
-        const data = req.body;
-        if (req.file) data.imageUrl = '/uploads/' + req.file.filename;
-        data.userId = req.user.id; 
-     /*    data.userId =3; */
-        try {
+         try {
+            const data = req.body;
+            if (req.file) data.imageUrl = '/uploads/' + req.file.filename;
+            data.userId = req.user.id; 
+       
             const note = await this.noteService.createNote(data);
-            res.status(201).json(note); // 201 Created
+             return successResponse(
+                res,
+                note,
+                "Note created successfully",
+                201
+            );
+
         } catch (error) {
-            res.status(400).json({ error: error.message });
+             return errorResponse(
+                res,
+                error.message,
+                400
+            );
         }
     }
 
     getNotesByUserId = async (req, res) => {
-        const userId = req.user.id;
         try {
-            const notes = await this.noteService.getNotesByUserId(userId);
-            res.status(200).json(notes); // 200 OK
+                const userId = req.user.id;
+                
+                const notes = await this.noteService.getNotesByUserId(userId);
+              
+                return successResponse(
+                    res,
+                    notes,
+                    "Notes retrieved successfully"
+                );
+
         } catch (error) {
-            res.status(404).json({ error: error.message });
+             return errorResponse(
+                res,
+                error.message,
+                404
+            );
         }
     }
 
     updateNote = async (req, res) => {
-        const { id } = req.params;
-        const data = req.body;
-        if (req.file) data.imageUrl = '/uploads/' + req.file.filename;
-        
         try {
+
+            const { id } = req.params;
+            const data = req.body;
+            if (req.file) data.imageUrl = '/uploads/' + req.file.filename;
+
             const note = await this.noteService.updateNote(id, data);
-            res.status(200).json(note);
+
+            return successResponse(
+                res,
+                note,
+                "Note updated successfully"
+            );
+
         } catch (error) {
-            res.status(404).json({ error: error.message });
+            return errorResponse(
+                res,
+                error.message,
+                404
+            );
         }
     }
 
     deleteNote = async (req, res) => {
-        const { id } = req.params;
-        try {
-            const result = await this.noteService.deleteNote(id);
-            res.status(200).json(result);
+         try {
+            const { id } = req.params;
+
+             await this.noteService.deleteNote(id);
+
+            return successResponse(
+                res,
+                null,
+                "Note deleted successfully"
+            );
         } catch (error) {
-            res.status(404).json({ error: error.message });
+            return errorResponse(
+                res,
+                error.message,
+                404
+            );
         }
     }
 
     shareNote = async (req, res) => {
-        const { id } = req.params;
-        const { email } = req.body;
-        const currentUserId = req.user.id;
-
-        if (!email) return res.status(400).json({ error: "Target email is required" });
-
         try {
+            const { id } = req.params;
+            const { email } = req.body;
+            const currentUserId = req.user.id;
+
+            if (!email) return res.status(400).json({ error: "Target email is required" });
+
+        
             const result = await this.noteService.shareNoteByEmail(id, email, currentUserId);
-            res.status(200).json(result);
+            
+            return successResponse(
+                    res,
+                    result,
+                    "Note shared successfully"
+                );
         } catch (error) {
-            res.status(400).json({ error: error.message });
+                return errorResponse(
+                res,
+                error.message,
+                400
+            );
         }
     }
 }
