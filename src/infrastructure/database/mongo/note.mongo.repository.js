@@ -8,7 +8,8 @@ export default class NoteMongoRepository {
             imageUrl: noteEntity.imageUrl,
             isPrivate: noteEntity.isPrivate,
             password: noteEntity.password,
-            userId: noteEntity.userId
+            userId: noteEntity.userId,
+            categoryId: noteEntity.categoryId
         });
         const savedNote = await note.save();
         return savedNote.toObject();

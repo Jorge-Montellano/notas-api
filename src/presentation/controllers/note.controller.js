@@ -9,10 +9,14 @@ export default class NoteController {
          try {
             const data = req.body;
             if (req.file) data.imageUrl = '/uploads/' + req.file.filename;
+            
             data.userId = req.user.id; 
-       
+            data.categoryId = req.body.categoryId || null;
+
+            //creacion nota - logica de negocio
             const note = await this.noteService.createNote(data);
-             return successResponse(
+             
+            return successResponse(
                 res,
                 note,
                 "Note created successfully",
