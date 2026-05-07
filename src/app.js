@@ -6,7 +6,7 @@ import morgan from 'morgan';
 import { loggerMiddleware } from './presentation/middlewares/logger.middleware.js';
 import noteRoutes from './presentation/routes/note.routes.js';
 import authRoutes from './presentation/routes/auth.routes.js';
-/* import categoryRoutes from './presentation/routes/category.routes.js'; */
+import categoryRoutes from './presentation/routes/category.routes.js';
 import { connectMongo } from './infrastructure/database/mongo/connection.js';
 import { connectMysql } from './infrastructure/database/mysql/connection.js';
 import { setupSwagger } from './infrastructure/config/swagger.config.js';
@@ -28,7 +28,7 @@ app.use('/uploads', express.static('uploads'));
 //rutas
 app.use('/api/v1/auth', authRoutes); //rutas loggeo
 app.use('/api/v1/notes', noteRoutes); //rutas notas
-/* app.use("/api/v1/categories", categoryRoutes); //rutas categorias */
+app.use("/api/v1/categories", categoryRoutes); //rutas categorias
  
 //prueba
 app.get('/api/health', (req, res) => {
