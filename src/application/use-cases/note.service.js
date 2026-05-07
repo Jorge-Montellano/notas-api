@@ -41,4 +41,16 @@ export default class NoteService {
 
         return await this.mailService.sendNoteEmail(targetEmail, note);
     }
+
+    //Ejercicio 3 proyecto
+    async getNoteById(id) {
+
+        const note = await this.noteRepository.findById(id);
+
+        if (!note) {
+            throw new Error("Note not found");
+        }
+
+    return note;
+}
 }

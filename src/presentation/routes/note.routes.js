@@ -218,4 +218,8 @@ router.delete("/:id", authMiddleware, roleMiddleware(["admin"]), noteController.
  */
 router.post("/:id/share", authMiddleware, noteController.shareNote);
 
+
+//Ruta publica - ejercicio 3
+router.get("/:id/public", noteController.getPublicNote);
+
 export default router;

@@ -121,4 +121,27 @@ export default class NoteController {
             );
         }
     }
+
+
+    //Ejercicio 3 - proyecto
+    getPublicNote = async (req, res) => {
+
+        const { id } = req.params;
+        try {
+
+            const note = await this.noteService.getNoteById(id);
+            // validar privacidad
+            if (note.isPrivate) {
+                return res.status(403).json({
+                    error: "This note is private"
+                });
+            }
+            res.status(200).json(note);
+        } catch (error) {
+
+            res.status(404).json({
+                error: error.message
+            });
+        }
+    }
 }
